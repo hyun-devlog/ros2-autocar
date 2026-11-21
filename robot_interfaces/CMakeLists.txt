@@ -1,24 +1,19 @@
 cmake_minimum_required(VERSION 3.8)
 project(robot_interfaces)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
-# find dependencies
+# 빌드 도구와 의존 패키지
 find_package(ament_cmake REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)      # .msg -> C++/Python 코드 생성기
+find_package(std_msgs REQUIRED)                       # RobotStatus의 std_msgs/Header
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
+# .msg를 코드로 변환
+# 메시지 추가 시 이 부분에 추가 필요
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/FaultItem.msg"
+  "msg/RobotStatus.msg"
+  DEPENDENCIES std_msgs
+)
 
+# 실행에 필요한 라이브러리
+ament_export_dependencies(rosidl_default_runtime)
 ament_package()
