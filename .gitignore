@@ -4,3 +4,9 @@ log/
 .env
 *.bag
 rosbag2_*/
+__pychach__/
+*.pyc
+.vscode/
+*.db
+*.db-shm
+*.db-wal
