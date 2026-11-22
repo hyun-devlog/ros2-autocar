@@ -11,3 +11,5 @@ __pychach__/
 *.db-shm
 *.db-walexperiments_raw/
 experiments_raw/
+core
+core.*
