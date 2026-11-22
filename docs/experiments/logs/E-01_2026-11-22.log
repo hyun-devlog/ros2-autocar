@@ -1,0 +1,42 @@
+===== 2026-11-22-09-48-23-916836-raspberrypi-1713607 =====
+1795340903.9191520 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-09-48-23-916836-raspberrypi-1713607
+1795340903.9193552 [INFO] [launch]: Default logging verbosity is set to INFO
+1795340903.9597723 [INFO] [health_monitor_node-1]: process started with pid [1713614]
+1795341202.5410042 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341202.6631424 [INFO] [health_monitor_node-1]: process has finished cleanly [pid 1713614]
+
+===== 2026-11-22-09-54-00-640558-raspberrypi-1737988 =====
+1795341240.6427541 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-09-54-00-640558-raspberrypi-1737988
+1795341240.6429665 [INFO] [launch]: Default logging verbosity is set to INFO
+1795341240.7132995 [INFO] [ldlidar_stl_ros2_node-1]: process started with pid [1738165]
+1795341255.9810064 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341256.0975018 [INFO] [ldlidar_stl_ros2_node-1]: process has finished cleanly [pid 1738165]
+
+===== 2026-11-22-09-54-03-330465-raspberrypi-1738596 =====
+1795341243.3326008 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-09-54-03-330465-raspberrypi-1738596
+1795341243.3328454 [INFO] [launch]: Default logging verbosity is set to INFO
+1795341243.3722565 [INFO] [health_monitor_node-1]: process started with pid [1738600]
+1795341287.3014145 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341287.4098196 [INFO] [health_monitor_node-1]: process has finished cleanly [pid 1738600]
+
+===== 2026-11-22-10-03-30-538700-raspberrypi-1779573 =====
+1795341810.5398667 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-10-03-30-538700-raspberrypi-1779573
+1795341810.5400651 [INFO] [launch]: Default logging verbosity is set to INFO
+1795341810.6089454 [INFO] [ldlidar_stl_ros2_node-1]: process started with pid [1779583]
+1795341827.2954130 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341827.5572927 [ERROR] [ldlidar_stl_ros2_node-1]: process has died [pid 1779583, exit code -6, cmd '/home/ubuntu/third_party_ros2/third_party_ws/install/ldlidar_stl_ros2/lib/ldlidar_stl_ros2/ldlidar_stl_ros2_node --ros-args -r __node:=LD19 --params-file /tmp/launch_params_8fdr0bm3 -r scan:=scan_raw'].
+
+===== 2026-11-22-10-03-33-888844-raspberrypi-1779630 =====
+1795341813.8909013 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-10-03-33-888844-raspberrypi-1779630
+1795341813.8911529 [INFO] [launch]: Default logging verbosity is set to INFO
+1795341813.9305813 [INFO] [health_monitor_node-1]: process started with pid [1779638]
+1795341890.8323255 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341890.9487226 [INFO] [health_monitor_node-1]: process has finished cleanly [pid 1779638]
+
+===== 2026-11-22-10-03-52-482448-raspberrypi-1780988 =====
+1795341832.4850054 [INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-11-22-10-03-52-482448-raspberrypi-1780988
+1795341832.4853103 [INFO] [launch]: Default logging verbosity is set to INFO
+1795341832.5507913 [INFO] [ldlidar_stl_ros2_node-1]: process started with pid [1780989]
+1795341850.8210580 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795341851.0738146 [ERROR] [ldlidar_stl_ros2_node-1]: process has died [pid 1780989, exit code -6, cmd '/home/ubuntu/third_party_ros2/third_party_ws/install/ldlidar_stl_ros2/lib/ldlidar_stl_ros2/ldlidar_stl_ros2_node --ros-args -r __node:=LD19 --params-file /tmp/launch_params_b8721pey -r scan:=scan_raw'].
+
