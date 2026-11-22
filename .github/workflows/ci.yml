@@ -29,11 +29,11 @@ jobs:
         shell: bash
         run: |
           source /opt/ros/humble/setup.bash
-          colcon build --packages-up-to health_monitor
+          colcon build --packages-up-to health_monitor safety_gate
 
       - name: Test
         shell: bash
         run: |
           source /opt/ros/humble/setup.bash
-          colcon test --packages-select health_monitor
+          colcon test --packages-select health_monitor safety_gate
           colcon test-result --verbose
