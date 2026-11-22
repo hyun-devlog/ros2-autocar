@@ -12,6 +12,7 @@ find_package(ament_cmake REQUIRED)
 
 add_library(health_core STATIC
   src/rate_tracker.cpp
+  src/state_evaluator.cpp
 )
 
 target_include_directories(health_core PUBLIC
@@ -22,6 +23,8 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_rate_tracker test/test_rate_tracker.cpp)
   target_link_libraries(test_rate_tracker health_core)
+  ament_add_gtest(test_state_evaluator test/test_state_evaluator.cpp)
+  target_link_libraries(test_state_evaluator health_core)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
