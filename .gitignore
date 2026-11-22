@@ -9,4 +9,5 @@ __pychach__/
 .vscode/
 *.db
 *.db-shm
-*.db-wal
+*.db-walexperiments_raw/
+experiments_raw/
