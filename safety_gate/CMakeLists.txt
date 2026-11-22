@@ -11,6 +11,9 @@ endif()
 
 
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(robot_interfaces REQUIRED)
 
 add_library(gate_core STATIC
   src/gate_logic.cpp
@@ -20,7 +23,13 @@ target_include_directories(gate_core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+add_executable(safety_gate_node src/safety_gate_node.cpp)
+target_link_libraries(safety_gate_node gate_core)
+ament_target_dependencies(safety_gate_node rclcpp geometry_msgs robot_interfaces)
+
 install(DIRECTORY include/ DESTINATION include)
+install(TARGETS safety_gate_node DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY config launch DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)

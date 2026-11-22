@@ -1,0 +1,8 @@
+safety_gate:
+  ros_parameters:
+    inputs: ["/cmd_vel", "/controller/cmd_vel"]
+    outputs: ["/safety_gate/cmd_vel", "/safety_gate/controller/cmd_vel"]
+    input_timeout_sec: 1.0
+    status_timeout_sec: 0.5
+    degraded_scale: 0.5
+    tick_hz: 10.0
