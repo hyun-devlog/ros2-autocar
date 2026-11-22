@@ -9,6 +9,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
 
 add_library(health_core STATIC
   src/rate_tracker.cpp
@@ -19,6 +20,13 @@ add_library(health_core STATIC
 target_include_directories(health_core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
+add_library(health_ros STATIC
+  src/topic_watchdog.cpp
+)
+
+target_link_libraries(health_ros health_core)
+ament_target_dependencies(health_ros rclcpp)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
