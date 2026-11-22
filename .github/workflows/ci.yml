@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+    container: ros:humble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          apt-get update
+          rosdep update
+          rosdep install --from-paths . --ignore-src -y
+
+      - name: Build
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          colcon build --packages-up-to health_monitor
+
+      - name: Test
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          colcon test --packages-select health_monitor
+          colcon test-result --verbose
