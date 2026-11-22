@@ -1,7 +1,7 @@
 health_monitor:
   ros__parameters:
     publish_hz: 10.0
-    rate_window_sec: 1.0
+    rate_window_sec: 2.0
 
     startup_grace_sec: 5.0
     recovery_hold_sec: 2.0
