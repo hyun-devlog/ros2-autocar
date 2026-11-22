@@ -10,6 +10,20 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+add_library(health_core STATIC
+  src/rate_tracker.cpp
+)
+
+target_include_directories(health_core PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_rate_tracker test/test_rate_tracker.cpp)
+  target_link_libraries(test_rate_tracker health_core)
+endif()
+
 install(DIRECTORY include/ DESTINATION include)
 
 ament_package()
