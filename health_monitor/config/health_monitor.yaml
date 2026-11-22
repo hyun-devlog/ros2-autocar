@@ -1,0 +1,25 @@
+health_monitor:
+  ros__parameters:
+    publish_hz: 10.0
+    rate_window_sec: 1.0
+
+    startup_grace_sec: 5.0
+    recovery_hold_sec: 2.0
+
+    cpu_temp_high_c: 80.0
+    cpu_temp_critical_c: 85.0
+    under_voltage_level: degraded
+    throttled_level: degraded
+    cpu_load_high_pct: 0.0
+    mem_available_low_pct: 0.0
+
+    probe:
+      cpu_temp: /sys/class/thermal/thermal_zone0/temp
+      under_voltage_hwmon_name: rpi_volt
+      throttled: /sys/devices/platform/soc/soc:firmware/get_throttled
+
+    watch:
+      topics: ["/scan_raw", "/ros_robot_controller/imu_raw", "/odom_raw"]
+      min_hz: [9.0, 44.0, 44.0]
+      timeout_sec: [2.0, 2.0, 2.0]
+      severity: ["fault", "fault", "fault"]

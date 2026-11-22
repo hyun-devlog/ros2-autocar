@@ -10,6 +10,7 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(robot_interfaces REQUIRED)
 
 add_library(health_core STATIC
   src/rate_tracker.cpp
@@ -28,6 +29,10 @@ add_library(health_ros STATIC
 target_link_libraries(health_ros health_core)
 ament_target_dependencies(health_ros rclcpp)
 
+add_executable(health_monitor_node src/health_monitor_node.cpp)
+target_link_libraries(health_monitor_node health_ros)
+ament_target_dependencies(health_monitor_node rclcpp robot_interfaces)
+
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_rate_tracker test/test_rate_tracker.cpp)
@@ -39,5 +44,7 @@ if(BUILD_TESTING)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
+install(TARGETS health_monitor_node DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY config launch DESTINATION share/${PROJECT_NAME})
 
 ament_package()
