@@ -24,5 +24,15 @@ topics=(
   /odom_raw
 )
 
-echo "recording ${#topics[@]} topics to ${out}/bag (Ctrl+C to stop)"
-ros2 bag record -o "${out}/bag" "${topics[@]}"
+while true; do
+  sleep 1
+  sync
+done &
+sync_pid=$!
+trap 'kill "${sync_pid}" 2>/dev/null || true; sync' EXIT
+
+echo "recording ${#topics[@]} topics to ${out}/bag (Ctrl+C to stop, synced every 1 s)"
+ros2 bag record -o "${out}/bag" \
+  --storage-preset-profile resilient \
+  --max-cache-size 0 \
+  "${topics[@]}"

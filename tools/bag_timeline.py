@@ -34,7 +34,13 @@ def main():
     reader.open(
         rosbag2_py.StorageOptions(uri=args.bag, storage_id='sqlite3'),
         rosbag2_py.ConverterOptions('cdr', 'cdr'))
-    types = {t.name: get_message(t.type) for t in reader.get_all_topics_and_types()}
+    types = {}
+    for topic in reader.get_all_topics_and_types():
+        try:
+            types[topic.name] = get_message(topic.type)
+        except (ModuleNotFoundError, AttributeError, ValueError):
+            print(f'warning: cannot decode {topic.name} ({topic.type}); '
+                  'showing arrival times only. Source the workspace first.')
 
     events = []
     last_seen = {}
@@ -55,7 +61,7 @@ def main():
             events.append((t, topic, 'resumed'))
         last_seen[topic] = t
 
-        if topic in VALUE_TOPICS:
+        if topic in VALUE_TOPICS and topic in types:
             value = value_of(deserialize_message(data, types[topic]))
             if last_value.get(topic) != value:
                 events.append((t, topic, value))
