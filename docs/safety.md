@@ -1,6 +1,6 @@
 # 안전 분석 및 안전 요구사항 (Safety Analysis & Requirements)
 
-> 이 문서는 ISO 26262 / Automotive SPICE / ISO 13482를 **준수하거나 인증받은 것이 아닙니다.**
+> 이 문서는 ISO 26262 / Automotive SPICE를 **준수하거나 인증받은 것이 아닙니다.**
 > 교육에서 배운 기능안전 방법론(위험 분석 → 안전 요구사항 → 검증 추적)을
 > 개인 프로젝트 규모에 맞게 가볍게 적용한 기록입니다.
 
@@ -9,7 +9,7 @@
 | 항목 | 내용 |
 |---|---|
 | 대상 | Hiwonder MentorPi A1 (Raspberry Pi 5 + RRC Lite, Ackermann 섀시) |
-| 대상 SW | ros2-robot-supervisor: health_monitor, safety_gate |
+| 대상 SW | ROS2 Auto Car: health_monitor, safety_gate, supervisor_bringup |
 | 제외 | Hiwonder 벤더 코드, RRC Lite 펌웨어, SLAM/Nav2 알고리즘 |
 | 안전 상태 (Safe State) | **모든 모터 입구에 0 속도 명령이 들어가 정지한 상태** |
 
@@ -17,10 +17,10 @@
 
 | V-Model 왼쪽 (설계) | 산출물 | V-Model 오른쪽 (검증) | 산출물 |
 |---|---|---|---|
-| 안전 요구사항 | 이 문서의 SR 목록 | 시스템 검증 | 장애 주입 결과표 (감지·정지 시간 실측) |
-| 아키텍처 | README 구조도, `robot_interfaces` | 통합 테스트 | 실로봇 장애 주입 실험 |
-| 상세 설계 | 판정 규칙, `docs/fault_codes.md` | 단위 테스트 | GoogleTest (`colcon test`) |
-| 구현 | C++ / rclcpp 코드 | | |
+| 안전 요구사항 | 이 문서의 SR 목록 (3·4절) | 시스템 검증 | 모터 연결 장애 주입 E-01~E-06, 감지·정지 시간 (6절, `docs/metrics/`) |
+| 아키텍처 | README 구조도, `robot_interfaces` 메시지 | 통합 검증 | 경로 확인과 모터 없는 gate 시험 (BRINGUP-01, GATE-02) |
+| 상세 설계 | 판정 규칙, `docs/fault_codes.md` | 단위 검증 | GoogleTest 33개, GitHub Actions CI |
+| 구현 | C++17 / rclcpp, ROS 없는 판정 라이브러리 (`health_core`, `gate_core`) | | |
 
 ## 3. 위험 분석 (Hazard Analysis)
 
@@ -39,7 +39,9 @@ ASIL 등급은 매기지 않았습니다. ASIL은 심각도·노출·통제 가�
 | H-08 | CPU·메모리 자원 고갈 → 노드 주기 저하 또는 강제 종료 | 설계 검토 | SR-11, SR-12 |
 | H-09 | 감시자(health_monitor) 자체가 멈춤 → 고장을 알릴 수 없음 | 설계 검토. GATE-02 ⑤에서 health_monitor 종료 시험 | SR-13 |
 | H-10 | 정상 라이다의 스캔 누락을 성능 저하로 오판 → 불필요한 감속 | GATE-02: 2분에 3회 감속. RATE-01: 약 35 s마다 스캔 1개 누락 실측 | SR-03 |
-| H-11 | safety_gate 비정상 종료(크래시, kill -9) → 0 속도를 보내지 못하고 벤더가 마지막 명령 유지 | 설계 검토 | 잔여 위험 (8절) |
+| H-11 | safety_gate 크래시 → 0 속도를 보내지 못하고 벤더가 마지막 명령 유지 | 설계 검토 → E-06에서 확인 (21.2 s 회전) | 잔여 위험 RR-01 |
+| H-12 | `ros_robot_controller` 크래시 → 정지 명령을 보드에 전달할 수 없음 | E-02b: 바퀴 계속 회전, 전원 차단으로만 정지 | 잔여 위험 RR-04 |
+| H-13 | 감시자 재시작 직후 데이터 확인 전에 OK 발행 → 고장 상태에서 주행 허용 가능 | E-05: 재시작 0.005 s 뒤 주행 재개 | 잔여 위험 RR-03 |
 
 ## 4. 안전 요구사항 (Safety Requirements)
 
@@ -50,7 +52,7 @@ ASIL 등급은 매기지 않았습니다. ASIL은 심각도·노출·통제 가�
 | SR-01 | `/scan_raw`가 기준 시간 이상 수신되지 않으면 FAULT(U1002)로 판정한다 | 2.0 s | [S5] Nav2 `source_timeout` 기본값 | health_monitor | 단위 테스트, 장애 주입(라이다 노드 종료) |
 | SR-02 | `/ros_robot_controller/imu_raw`가 기준 시간 이상 수신되지 않으면 FAULT(U1002)로 판정한다 | 2.0 s | [S5] | health_monitor | 단위 테스트, 장애 주입(`ros_robot_controller` 종료) |
 | SR-03 | 감시 토픽 주기가 기준 주기 × 0.9 미만이면 DEGRADED(U1003)로 판정한다. 주기는 최근 2.0 s 윈도우로 계산한다 | 라이다 9.0 Hz, IMU·odom 44 Hz, 윈도우 2.0 s | [S6] diagnostic_updater 허용오차 0.1, [S7] LD19 10 Hz, IMU·odom은 실측 49 Hz. 윈도우는 **실측 기반 설계값** (RATE-01: 스캔 1개 누락 허용) | health_monitor | 단위 테스트, 장시간 실측 |
-| SR-04 | safety_gate는 입력 명령이 기준 시간 이상 없으면 0 속도를 발행한다 | 1.0 s | [S8] Nav2 `velocity_timeout` 기본값 | safety_gate | 단위 테스트, 장애 주입(teleop 종료) |
+| SR-04 | safety_gate는 입력 명령이 기준 시간 이상 없으면 0 속도를 발행한다 | 1.0 s | [S8] Nav2 `velocity_timeout` 기본값 | safety_gate | 단위 테스트, 장애 주입(명령 발행 종료) |
 | SR-05 | `/cmd_vel`, `/controller/cmd_vel` 두 입구 모두 safety_gate를 거친다 | — | H-04 실측 | bringup launch | `ros2 topic info -v`로 구독자 확인 |
 | SR-06 | 등급 하향(복구)은 더 나은 상태가 기준 시간 유지된 뒤에만 반영한다 | 2.0 s | **설계값** (공식 근거 없음) | health_monitor | 단위 테스트 |
 | SR-07 | SoC 온도 80 °C 이상이면 DEGRADED(B1001), 85 °C 이상이면 FAULT(B1002) | 80 / 85 °C | [S3][S4] Raspberry Pi 공식 문서 | health_monitor | 단위 테스트(가짜 sysfs) |
@@ -71,28 +73,30 @@ ASIL 등급은 매기지 않았습니다. ASIL은 심각도·노출·통제 가�
 ## 5. 추적성 (Traceability)
 
 단위 테스트는 테스트 묶음 이름에 SR 번호를 넣었습니다 (예: `StateEvaluatorSR01.*`). 실험 기록은 `docs/experiments/`에 있습니다.
-GATE-02는 모터를 연결하지 않은 상태의 예비 확인이며, 모터 연결 후 본 실험은 E-01~E-05입니다.
+GATE-02는 모터를 연결하지 않은 상태의 예비 확인이며, 모터 연결 후 본 실험은 BRINGUP-01, E-MAIN(E-01, E-05), E-02, E-CRASH(E-06, E-02b)입니다.
+자동 계산 결과는 `docs/metrics/summary.md`에 있습니다.
 
 | SR | 코드 위치 | 단위 테스트 | 실험 | 결과 |
 |---|---|---|---|---|
 | SR-01 | `state_evaluator.cpp`, `rate_tracker.cpp` | `StateEvaluatorSR01.*`, `RateTrackerSR01.*` | E-01 라이다 종료 | 모터 연결: 마지막 스캔 +2.017 s에 U1002, +2.069 s에 정지 명령 (E-MAIN) |
-| SR-02 | `state_evaluator.cpp` | `StateEvaluatorSR01.*` (같은 규칙) | E-02 RRC 노드 종료 | 마지막 IMU +2.013 s에 U1002 (E-02). `/odom_raw`는 단절 후에도 계속 발행되어 감시 신호로 부적합 |
+| SR-02 | `state_evaluator.cpp` | `StateEvaluatorSR01.*` (같은 규칙) | E-02 RRC 노드 종료 | 마지막 IMU +2.013 s, +2.058 s에 U1002 (E-02, E-MAIN). `/odom_raw`는 단절 후에도 계속 발행되어 감시 신호로 부적합 |
 | SR-03 | `state_evaluator.cpp`, `rate_tracker.cpp` | `StateEvaluatorSR03.*`, `RateTrackerSR03.*` | RATE-01 장시간 실측 | 스캔 누락 15회 / 523.9 s 동안 오탐 0회 |
-| SR-04 | `gate_logic.cpp` | `GateLogicSR04.*` | E-03 명령 소스 종료 | 모터 연결: 6회 평균 1.040 s에 정지, 바퀴 정지 확인 (BRINGUP-01) |
+| SR-04 | `gate_logic.cpp` | `GateLogicSR04.*` | E-03 명령 소스 종료 | 모터 연결: 7회 1.005~1.074 s에 정지 명령 (BRINGUP-01, E-MAIN). BRINGUP-01 6회는 바퀴 정지 육안 확인 |
 | SR-05 | `supervisor_bringup/launch/bringup.launch.py` | | E-04 구독자 확인 | 1차에서 우회 경로 발견 → 수정 후 두 입구 모두 safety_gate만 구독 (BRINGUP-01) |
-| SR-06 | `state_evaluator.cpp` | `StateEvaluatorSR06.*` | E-01 | 예비: 스캔 재개 +2.56 s에 OK (E-01), gate 0.1 복귀 +2.28~2.34 s (GATE-02) |
+| SR-06 | `state_evaluator.cpp` | `StateEvaluatorSR06.*` | E-01 | 모터 연결: 스캔 재개 +2.251 s에 OK, +2.337 s에 주행 재개 (E-MAIN) |
 | SR-07 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR07.*`, `SystemProbeTest.SR07*` | | |
 | SR-08 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR08.*`, `SystemProbeTest.SR08*` | | |
-| SR-09 | `gate_logic.cpp` | `GateLogicSR09.*` | E-01~E-03 공통 | 예비: STOP 중 두 채널 모두 0 반복 (GATE-02) |
+| SR-09 | `gate_logic.cpp` | `GateLogicSR09.*` | E-01~E-03 공통 | 모터 연결: FAULT 후 정지 명령 2.035~2.129 s, STOP 중 두 입구 모두 0 반복 (E-MAIN, E-02, GATE-02) |
 | SR-10 | `state_evaluator.cpp`, `topic_watchdog.cpp` | `StateEvaluatorSR10.*`, `RateTrackerSR10.*` | | 실로봇: controller 없이 시작 시 5 s 뒤 U1001 (RATE-01 5절) |
 | SR-11 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR11.*`, `SystemProbeTest.SR11*` | 부하 실측 | |
 | SR-12 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR11.*`, `SystemProbeTest.SR12*` | 부하 실측 | |
 | SR-13 | `gate_logic.cpp` | `GateLogicSR13.*` | E-05 health_monitor 종료 | 모터 연결: 마지막 상태 +0.552 s에 정지 명령 (E-MAIN) |
-| SR-14 | `gate_logic.cpp` | `GateLogic.DegradedScalesCommand`, `GateLogic.EnteringDegradedResendsScaledLastCommand` | | 예비: DEGRADED 중 0.1 → 0.05 (GATE-02) |
+| SR-14 | `gate_logic.cpp` | `GateLogic.DegradedScalesCommand`, `GateLogic.EnteringDegradedResendsScaledLastCommand` | | DEGRADED 중 0.1 → 0.05 (GATE-02, E-MAIN) |
 
 ## 6. 감지·대응 시간 (FTTI 개념 차용)
 
 ISO 26262의 "고장 감지 + 대응 시간" 개념을 빌려, 장애 주입 실험에서 아래 두 값을 실측합니다.
+대응 시간은 gate가 0 속도를 낸 시각까지이며, 0 속도가 바퀴 정지로 이어지는 것은 BRINGUP-01에서 육안으로 확인했습니다. E-02에서는 `ros_robot_controller`가 SIGINT 종료 처리로 바퀴를 먼저 멈췄고, gate의 0 속도는 모터로 가는 경로인 그 노드가 없어 전달되지 않았습니다 (RR-04와 같은 구조).
 
 "장애 발생 시각"은 마지막 정상 메시지의 수신 시각입니다 (Unix s).
 
@@ -102,7 +106,7 @@ ISO 26262의 "고장 감지 + 대응 시간" 개념을 빌려, 장애 주입 실
 | GATE-02 ② (모터 없음) | 1795356946.733 | (로그 없음) | 1795356948.840 | — | 2.11 s (장애 → 0 출력) |
 | E-01 라이다 종료 (모터 연결) | 1795436518.047 | 1795436520.064 | 1795436520.116 | 2.017 s | 2.069 s |
 | E-02 RRC 노드 종료 | 1795437059.967 | 1795437061.980 | 1795437062.002 | 2.013 s | 2.035 s (바퀴는 노드 종료 직후 정지) |
-| E-03 명령 소스 종료 (6회 평균) | — | — | — | — | 1.040 s (1.005~1.074) |
+| E-03 명령 소스 종료 (7회) | — | — | — | — | 1.005~1.074 s |
 | E-05 health_monitor 종료 | 1795436548.963 | — (gate 자체 판단) | 1795436549.515 | — | 0.552 s |
 | E-06 safety_gate 크래시 | 1795437680.883 | 감지 안 됨 | 발행 안 됨 | — | **정지 실패** (수동 개입까지 21.2 s 회전) |
 | E-02b ros_robot_controller 크래시 | (기록 손실) | (기록 손실) | 전달 경로 없음 | — | **정지 실패** (전원 차단) |
@@ -126,9 +130,9 @@ hwmon 번호(`hwmon3`)는 부팅마다 바뀔 수 있어, 노드는 이름(`rpi_
 | ID | 위험 | 왜 남는가 | 확인 계획 |
 |---|---|---|---|
 | RR-01 | safety_gate가 크래시하면 0 속도를 보내지 못하고, 벤더 `odom_publisher`가 마지막 명령을 유지 (H-11) | 정상 종료 시에만 pre-shutdown 훅으로 0을 보냄. 모터 경로에 gate 외 다른 차단 수단이 없음 | **확인됨 (E-06)**: SIGKILL 후 바퀴가 21.2 s 동안 회전, 감시자는 계속 OK. 하드웨어 비상 정지 또는 펌웨어 명령 timeout 필요 |
-| RR-04 | `ros_robot_controller`가 크래시하면 정지 명령을 보드에 전달할 수 없고, RRC Lite 펌웨어는 마지막 모터 명령을 유지 | 펌웨어에 명령 timeout이 없음. 소프트웨어가 감지해도 대응 경로가 없음 | **확인됨 (E-02b)**: SIGKILL 후 바퀴 계속 회전, 전원 스위치로만 정지. SIGINT(E-02)에서는 노드가 종료하며 정지 명령을 보내 즉시 정지 |
-| RR-03 | 감시자를 재시작하면 기동 유예(5 s) 동안 데이터 확인 없이 OK를 발행 | SR-10 설계상 "아직 안 온 토픽"은 유예 중 고장이 아님 | E-05 관찰 3. 개선 후보: 유예 중 OK 대신 DEGRADED 발행 |
 | RR-02 | health_monitor와 safety_gate가 같은 컴퓨터(Pi 5)에서 돌기 때문에, 컴퓨터 전체가 멈추면 둘 다 동작하지 않음 | 공통 원인 고장 | 범위 밖. 하드웨어 와치독이 필요함을 기록 |
+| RR-03 | 감시자를 재시작하면 기동 유예(5 s) 동안 데이터 확인 없이 OK를 발행 (H-13) | SR-10 설계상 "아직 안 온 토픽"은 유예 중 고장이 아님 | E-05 관찰 3. 개선 후보: 유예 중 OK 대신 DEGRADED 발행 |
+| RR-04 | `ros_robot_controller`가 크래시하면 정지 명령을 보드에 전달할 수 없고, RRC Lite 펌웨어는 마지막 모터 명령을 유지 (H-12) | 펌웨어에 명령 timeout이 없음. 소프트웨어가 감지해도 대응 경로가 없음 | **확인됨 (E-02b)**: SIGKILL 후 바퀴 계속 회전, 전원 스위치로만 정지. SIGINT(E-02)에서는 노드가 종료하며 정지 명령을 보내 즉시 정지 |
 
 ## 9. 출처
 
