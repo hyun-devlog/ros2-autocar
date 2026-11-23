@@ -1,0 +1,147 @@
+{
+  "events": [
+    {
+      "kind": "command",
+      "topic": "/cmd_vel",
+      "last": 1795434821.750024,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0053400993347168,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "command",
+      "topic": "/controller/cmd_vel",
+      "last": 1795434876.2819366,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0737524032592773,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "command",
+      "topic": "/cmd_vel",
+      "last": 1795434903.3184679,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0363774299621582,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "command",
+      "topic": "/controller/cmd_vel",
+      "last": 1795434927.7974892,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0568115711212158,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "command",
+      "topic": "/controller/cmd_vel",
+      "last": 1795435032.944029,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0099389553070068,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "command",
+      "topic": "/cmd_vel",
+      "last": 1795435054.7983093,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0543954372406006,
+      "recover": null,
+      "bag": "BRINGUP-01"
+    },
+    {
+      "kind": "sensor",
+      "topic": "/scan_raw",
+      "last": 1795436518.0472906,
+      "resume": 1795436532.6117804,
+      "detect": 2.01706600189209,
+      "stop": 2.0681874752044678,
+      "recover": 2.2513744831085205,
+      "bag": "E-MAIN"
+    },
+    {
+      "kind": "monitor",
+      "topic": "/robot_status",
+      "last": 1795436548.963344,
+      "resume": 1795436556.0445964,
+      "detect": null,
+      "stop": 0.5517172813415527,
+      "recover": null,
+      "bag": "E-MAIN"
+    },
+    {
+      "kind": "command",
+      "topic": "/cmd_vel",
+      "last": 1795436570.648629,
+      "resume": null,
+      "detect": null,
+      "stop": 1.0662200450897217,
+      "recover": null,
+      "bag": "E-MAIN"
+    },
+    {
+      "kind": "sensor",
+      "topic": "/ros_robot_controller/imu_raw",
+      "last": 1795436724.5844505,
+      "resume": null,
+      "detect": 2.0581140518188477,
+      "stop": 2.128602981567383,
+      "recover": null,
+      "bag": "E-MAIN"
+    },
+    {
+      "kind": "sensor",
+      "topic": "/ros_robot_controller/imu_raw",
+      "last": 1795437059.9665635,
+      "resume": null,
+      "detect": 2.013051986694336,
+      "stop": 2.035010576248169,
+      "recover": null,
+      "bag": "E-02"
+    },
+    {
+      "kind": "gate",
+      "topic": "/safety_gate/cmd_vel",
+      "last": 1795437680.8827293,
+      "resume": 1795437702.0685122,
+      "detect": null,
+      "stop": null,
+      "recover": null,
+      "bag": "E-CRASH"
+    }
+  ],
+  "status": {
+    "BRINGUP-01": {
+      "time_ok_pct": 100.0,
+      "dtc_counts": {}
+    },
+    "E-MAIN": {
+      "time_ok_pct": 87.95298497923369,
+      "dtc_counts": {
+        "U1003": 5,
+        "U1002": 2
+      }
+    },
+    "E-02": {
+      "time_ok_pct": 79.35742457437355,
+      "dtc_counts": {
+        "U1002": 1
+      }
+    },
+    "E-CRASH": {
+      "time_ok_pct": 100.0,
+      "dtc_counts": {}
+    }
+  }
+}
