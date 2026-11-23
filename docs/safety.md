@@ -75,11 +75,11 @@ GATE-02는 모터를 연결하지 않은 상태의 예비 확인이며, 모터 �
 
 | SR | 코드 위치 | 단위 테스트 | 실험 | 결과 |
 |---|---|---|---|---|
-| SR-01 | `state_evaluator.cpp`, `rate_tracker.cpp` | `StateEvaluatorSR01.*`, `RateTrackerSR01.*` | E-01 라이다 종료 | 예비: 마지막 스캔 +2.06 s에 U1002 (E-01), gate 0 출력 +2.11 s (GATE-02) |
-| SR-02 | `state_evaluator.cpp` | `StateEvaluatorSR01.*` (같은 규칙) | E-02 RRC 노드 종료 | |
+| SR-01 | `state_evaluator.cpp`, `rate_tracker.cpp` | `StateEvaluatorSR01.*`, `RateTrackerSR01.*` | E-01 라이다 종료 | 모터 연결: 마지막 스캔 +2.017 s에 U1002, +2.069 s에 정지 명령 (E-MAIN) |
+| SR-02 | `state_evaluator.cpp` | `StateEvaluatorSR01.*` (같은 규칙) | E-02 RRC 노드 종료 | 마지막 IMU +2.013 s에 U1002 (E-02). `/odom_raw`는 단절 후에도 계속 발행되어 감시 신호로 부적합 |
 | SR-03 | `state_evaluator.cpp`, `rate_tracker.cpp` | `StateEvaluatorSR03.*`, `RateTrackerSR03.*` | RATE-01 장시간 실측 | 스캔 누락 15회 / 523.9 s 동안 오탐 0회 |
-| SR-04 | `gate_logic.cpp` | `GateLogicSR04.*` | E-03 명령 소스 종료 | 예비: 마지막 명령 +1.03 s에 0 한 번 (GATE-02 ④) |
-| SR-05 | bringup launch (8단계) | | E-04 구독자 확인 | |
+| SR-04 | `gate_logic.cpp` | `GateLogicSR04.*` | E-03 명령 소스 종료 | 모터 연결: 6회 평균 1.040 s에 정지, 바퀴 정지 확인 (BRINGUP-01) |
+| SR-05 | `supervisor_bringup/launch/bringup.launch.py` | | E-04 구독자 확인 | 1차에서 우회 경로 발견 → 수정 후 두 입구 모두 safety_gate만 구독 (BRINGUP-01) |
 | SR-06 | `state_evaluator.cpp` | `StateEvaluatorSR06.*` | E-01 | 예비: 스캔 재개 +2.56 s에 OK (E-01), gate 0.1 복귀 +2.28~2.34 s (GATE-02) |
 | SR-07 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR07.*`, `SystemProbeTest.SR07*` | | |
 | SR-08 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR08.*`, `SystemProbeTest.SR08*` | | |
@@ -87,7 +87,7 @@ GATE-02는 모터를 연결하지 않은 상태의 예비 확인이며, 모터 �
 | SR-10 | `state_evaluator.cpp`, `topic_watchdog.cpp` | `StateEvaluatorSR10.*`, `RateTrackerSR10.*` | | 실로봇: controller 없이 시작 시 5 s 뒤 U1001 (RATE-01 5절) |
 | SR-11 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR11.*`, `SystemProbeTest.SR11*` | 부하 실측 | |
 | SR-12 | `state_evaluator.cpp`, `system_probe.cpp` | `StateEvaluatorSR11.*`, `SystemProbeTest.SR12*` | 부하 실측 | |
-| SR-13 | `gate_logic.cpp` | `GateLogicSR13.*` | E-05 health_monitor 종료 | 예비: 종료 후 두 채널 0 (GATE-02 ⑤), 지연 미측정 |
+| SR-13 | `gate_logic.cpp` | `GateLogicSR13.*` | E-05 health_monitor 종료 | 모터 연결: 마지막 상태 +0.552 s에 정지 명령 (E-MAIN) |
 | SR-14 | `gate_logic.cpp` | `GateLogic.DegradedScalesCommand`, `GateLogic.EnteringDegradedResendsScaledLastCommand` | | 예비: DEGRADED 중 0.1 → 0.05 (GATE-02) |
 
 ## 6. 감지·대응 시간 (FTTI 개념 차용)
@@ -100,10 +100,12 @@ ISO 26262의 "고장 감지 + 대응 시간" 개념을 빌려, 장애 주입 실
 |---|---|---|---|---|---|
 | E-01 예비 (gate 없음) | 1795341827.218 | 1795341829.282 | — | 2.06 s | — |
 | GATE-02 ② (모터 없음) | 1795356946.733 | (로그 없음) | 1795356948.840 | — | 2.11 s (장애 → 0 출력) |
-| E-01 라이다 종료 (모터 연결) | | | | | |
-| E-02 RRC 노드 종료 | | | | | |
-| E-03 명령 소스 종료 | | | | | |
-| E-05 health_monitor 종료 | | | | | |
+| E-01 라이다 종료 (모터 연결) | 1795436518.047 | 1795436520.064 | 1795436520.116 | 2.017 s | 2.069 s |
+| E-02 RRC 노드 종료 | 1795437059.967 | 1795437061.980 | 1795437062.002 | 2.013 s | 2.035 s (바퀴는 노드 종료 직후 정지) |
+| E-03 명령 소스 종료 (6회 평균) | — | — | — | — | 1.040 s (1.005~1.074) |
+| E-05 health_monitor 종료 | 1795436548.963 | — (gate 자체 판단) | 1795436549.515 | — | 0.552 s |
+| E-06 safety_gate 크래시 | 1795437680.883 | 감지 안 됨 | 발행 안 됨 | — | **정지 실패** (수동 개입까지 21.2 s 회전) |
+| E-02b ros_robot_controller 크래시 | (기록 손실) | (기록 손실) | 전달 경로 없음 | — | **정지 실패** (전원 차단) |
 
 ## 7. 측정 기록: 시스템 소스 (2026-11-22, MentorPi 컨테이너, ubuntu 사용자)
 
@@ -123,7 +125,9 @@ hwmon 번호(`hwmon3`)는 부팅마다 바뀔 수 있어, 노드는 이름(`rpi_
 
 | ID | 위험 | 왜 남는가 | 확인 계획 |
 |---|---|---|---|
-| RR-01 | safety_gate가 비정상 종료하면 0 속도를 보내지 못하고, 벤더 `odom_publisher`가 마지막 명령을 유지 (H-11) | 정상 종료 시에만 pre-shutdown 훅으로 0을 보냄. 모터 경로에 gate 외 다른 차단 수단이 없음 | E-04: RRC Lite 펌웨어가 명령이 끊기면 스스로 모터를 멈추는지 확인. 멈추지 않으면 하드웨어 비상 정지 필요로 기록 |
+| RR-01 | safety_gate가 크래시하면 0 속도를 보내지 못하고, 벤더 `odom_publisher`가 마지막 명령을 유지 (H-11) | 정상 종료 시에만 pre-shutdown 훅으로 0을 보냄. 모터 경로에 gate 외 다른 차단 수단이 없음 | **확인됨 (E-06)**: SIGKILL 후 바퀴가 21.2 s 동안 회전, 감시자는 계속 OK. 하드웨어 비상 정지 또는 펌웨어 명령 timeout 필요 |
+| RR-04 | `ros_robot_controller`가 크래시하면 정지 명령을 보드에 전달할 수 없고, RRC Lite 펌웨어는 마지막 모터 명령을 유지 | 펌웨어에 명령 timeout이 없음. 소프트웨어가 감지해도 대응 경로가 없음 | **확인됨 (E-02b)**: SIGKILL 후 바퀴 계속 회전, 전원 스위치로만 정지. SIGINT(E-02)에서는 노드가 종료하며 정지 명령을 보내 즉시 정지 |
+| RR-03 | 감시자를 재시작하면 기동 유예(5 s) 동안 데이터 확인 없이 OK를 발행 | SR-10 설계상 "아직 안 온 토픽"은 유예 중 고장이 아님 | E-05 관찰 3. 개선 후보: 유예 중 OK 대신 DEGRADED 발행 |
 | RR-02 | health_monitor와 safety_gate가 같은 컴퓨터(Pi 5)에서 돌기 때문에, 컴퓨터 전체가 멈추면 둘 다 동작하지 않음 | 공통 원인 고장 | 범위 밖. 하드웨어 와치독이 필요함을 기록 |
 
 ## 9. 출처
