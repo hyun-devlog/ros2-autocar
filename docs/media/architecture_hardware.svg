@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1220" height="960" viewBox="0 0 1220 960" font-family="Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Noto Sans CJK KR', 'Malgun Gothic', sans-serif">
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 <rect width="1220" height="960" fill="#FFFFFF"/>
-<rect x="398" y="55" width="430" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="613.0" y="99.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">내 노트북</text><text x="613.0" y="129.0" text-anchor="middle" font-size="16" fill="#5F5E5A">SSH · ROS 2 CLI · rviz2</text>
+<rect x="398" y="55" width="430" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="613.0" y="99.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">개발 PC</text><text x="613.0" y="129.0" text-anchor="middle" font-size="16" fill="#5F5E5A">SSH, ROS 2 CLI, rviz2</text>
 <polyline points="613,157 613,322" fill="none" stroke="#8A8A8A" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
-<text x="632" y="208" text-anchor="start" font-size="16" fill="#555">Wi-Fi (ROS 2 DDS · SSH)</text>
-<rect x="38" y="252" width="1150" height="604" rx="22" fill="none" stroke="#CFCFCF" stroke-width="1.2" stroke-dasharray="8 6"/><text x="66" y="290" font-size="20" font-weight="600" fill="#222">MentorPi A1 (애커먼 섀시)</text>
-<rect x="73" y="324" width="252" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="199.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">STL-19P 라이다</text><text x="199.0" y="398.0" text-anchor="middle" font-size="16" fill="#5F5E5A">USB 시리얼</text>
-<rect x="398" y="324" width="430" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="613.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">Raspberry Pi 5</text><text x="613.0" y="398.0" text-anchor="middle" font-size="16" fill="#0F6E52">Ubuntu 호스트 + Docker (ros:humble)</text>
-<rect x="902" y="324" width="252" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="1028.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">카메라</text><text x="1028.0" y="398.0" text-anchor="middle" font-size="16" fill="#5F5E5A">USB (이번 범위에서 미사용)</text>
+<text x="632" y="208" text-anchor="start" font-size="16" fill="#555">Wi-Fi (ROS 2 DDS, SSH)</text>
+<rect x="38" y="252" width="1150" height="604" rx="22" fill="none" stroke="#CFCFCF" stroke-width="1.2" stroke-dasharray="8 6"/><text x="66" y="290" font-size="20" font-weight="600" fill="#222">Ackermann 조향 로봇 카 키트 (Hiwonder MentorPi A1)</text>
+<rect x="73" y="324" width="252" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="199.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">STL-19P LiDAR</text><text x="199.0" y="398.0" text-anchor="middle" font-size="16" fill="#5F5E5A">USB Serial</text>
+<rect x="398" y="324" width="430" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="613.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">Raspberry Pi 5</text><text x="613.0" y="398.0" text-anchor="middle" font-size="16" fill="#0F6E52">Ubuntu / Docker (ROS 2 Humble)</text>
+<rect x="902" y="324" width="252" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="1028.0" y="368.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">카메라</text><text x="1028.0" y="398.0" text-anchor="middle" font-size="16" fill="#5F5E5A">USB (프로젝트 범위 제외)</text>
 <polyline points="327,374 396,374" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="900,374 830,374" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="613,426 613,520" fill="none" stroke="#8A8A8A" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
-<text x="632" y="476" text-anchor="start" font-size="16" fill="#555">USB 시리얼 (Hiwonder 프레임)</text>
-<rect x="361" y="522" width="503" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="612.5" y="566.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">RRC Lite (STM32F407)</text><text x="612.5" y="596.0" text-anchor="middle" font-size="16" fill="#993C1D">실시간 모터 제어 · 센서 수집</text>
-<rect x="91" y="720" width="234" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="208.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">엔코더 모터</text><text x="208.0" y="794.0" text-anchor="middle" font-size="16" fill="#993C1D">속도 명령 · AB상</text>
-<rect x="361" y="720" width="234" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="478.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">조향 서보</text><text x="478.0" y="794.0" text-anchor="middle" font-size="16" fill="#993C1D">PWM 각도</text>
-<rect x="631" y="720" width="234" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="748.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">IMU</text><text x="748.0" y="794.0" text-anchor="middle" font-size="16" fill="#5F5E5A">보드 내장</text>
-<rect x="901" y="720" width="234" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="1018.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">배터리</text><text x="1018.0" y="794.0" text-anchor="middle" font-size="16" fill="#5F5E5A">전압 측정</text>
+<text x="632" y="476" text-anchor="start" font-size="16" fill="#555">USB Serial (Hiwonder 프로토콜)</text>
+<rect x="361" y="522" width="503" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="612.5" y="566.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">모터 제어 보드 (RRC Lite / STM32F407)</text><text x="612.5" y="596.0" text-anchor="middle" font-size="16" fill="#993C1D">구동부 제어 및 센서 데이터 수집</text>
+<rect x="91" y="720" width="234" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="208.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">엔코더 모터</text><text x="208.0" y="794.0" text-anchor="middle" font-size="16" fill="#993C1D">속도 제어 및 엔코더 피드백</text>
+<rect x="361" y="720" width="234" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="478.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">조향 서보</text><text x="478.0" y="794.0" text-anchor="middle" font-size="16" fill="#993C1D">조향 각도 제어 (PWM)</text>
+<rect x="631" y="720" width="234" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="748.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">IMU</text><text x="748.0" y="794.0" text-anchor="middle" font-size="16" fill="#5F5E5A">보드 내장 IMU</text>
+<rect x="901" y="720" width="234" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="1018.0" y="764.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">배터리</text><text x="1018.0" y="794.0" text-anchor="middle" font-size="16" fill="#5F5E5A">배터리 전압 측정</text>
 <polyline points="228,716 414,626" fill="none" stroke="#8A8A8A" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
 <polyline points="540,626 486,716" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="738,716 684,626" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="1000,716 810,626" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <rect x="72" y="895" width="20" height="20" rx="4" fill="#E1F5EE" stroke="#2E8B6A"/>
-<text x="106" y="911" text-anchor="start" font-size="17" fill="#444">이 프로젝트가 동작하는 곳</text>
+<text x="106" y="911" text-anchor="start" font-size="17" fill="#444">소프트웨어 실행 환경</text>
 <rect x="402" y="895" width="20" height="20" rx="4" fill="#FAECE7" stroke="#C0563A"/>
-<text x="436" y="911" text-anchor="start" font-size="17" fill="#444">실시간 제어 · 구동</text>
+<text x="436" y="911" text-anchor="start" font-size="17" fill="#444">모터 제어 보드 및 구동부</text>
 <rect x="732" y="895" width="20" height="20" rx="4" fill="#F1EFE8" stroke="#8A8880"/>
-<text x="766" y="911" text-anchor="start" font-size="17" fill="#444">센서 · 기타</text>
+<text x="766" y="911" text-anchor="start" font-size="17" fill="#444">센서 및 주변 장치</text>
 </svg>

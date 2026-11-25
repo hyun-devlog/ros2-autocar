@@ -2,22 +2,22 @@
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 <rect width="1220" height="1010" fill="#FFFFFF"/>
 <rect x="38" y="38" width="1150" height="682" rx="22" fill="none" stroke="#CFCFCF" stroke-width="1.2" stroke-dasharray="8 6"/><text x="66" y="76" font-size="20" font-weight="600" fill="#222">Raspberry Pi 5 호스트</text>
-<rect x="73" y="98" width="1080" height="590" rx="22" fill="none" stroke="#CFCFCF" stroke-width="1.2"/><text x="101" y="136" font-size="17" font-weight="400" fill="#666">Docker MentorPi (ros:humble)</text>
-<rect x="109" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="261.5" y="209.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">라이다 드라이버</text><text x="261.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">/scan_raw 약 10 Hz</text>
-<rect x="460" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="612.5" y="209.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">명령 소스 (teleop · Nav2)</text><text x="612.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">/cmd_vel · /controller/cmd_vel</text>
-<rect x="811" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="963.5" y="209.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">호스트 /sys · /proc</text><text x="963.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">온도 · 저전압 · 스로틀 · CPU · 메모리</text>
-<rect x="109" y="335" width="305" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="261.5" y="379.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">health_monitor</text><text x="261.5" y="409.0" text-anchor="middle" font-size="16" fill="#0F6E52">/robot_status 10 Hz · 고장 코드</text>
-<rect x="460" y="335" width="305" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="612.5" y="379.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">safety_gate</text><text x="612.5" y="409.0" text-anchor="middle" font-size="16" fill="#0F6E52">통과 · 감속 · 정지</text>
-<rect x="109" y="535" width="305" height="100" rx="12" fill="#EEEDFE" stroke="#8B7FD6" stroke-width="1.2" stroke-dasharray="6 5"/><text x="261.5" y="579.0" text-anchor="middle" font-size="21" font-weight="600" fill="#3C3489">status_reporter</text><text x="261.5" y="609.0" text-anchor="middle" font-size="16" fill="#534AB7">MQTT 원격 보고</text>
-<rect x="460" y="535" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="612.5" y="579.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">odom_publisher</text><text x="612.5" y="609.0" text-anchor="middle" font-size="16" fill="#5F5E5A">remap: /safety_gate/* 구독</text>
-<rect x="811" y="535" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="963.5" y="579.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">ros_robot_controller</text><text x="963.5" y="609.0" text-anchor="middle" font-size="16" fill="#5F5E5A">RRC 브리지 노드</text>
+<rect x="73" y="98" width="1080" height="590" rx="22" fill="none" stroke="#CFCFCF" stroke-width="1.2"/><text x="101" y="136" font-size="17" font-weight="400" fill="#666">ROS 2 Humble 컨테이너</text>
+<rect x="109" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="261.5" y="209.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">LiDAR 드라이버</text><text x="261.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">/scan_raw 약 10 Hz</text>
+<rect x="460" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="612.5" y="209.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">주행 명령 입력</text><text x="612.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">/cmd_vel, /controller/cmd_vel</text>
+<rect x="811" y="165" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="963.5" y="209.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">호스트 시스템 정보</text><text x="963.5" y="239.0" text-anchor="middle" font-size="16" fill="#5F5E5A">/sys, /proc: 온도, 저전압 및 스로틀링</text>
+<rect x="109" y="335" width="305" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="261.5" y="379.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">health_monitor</text><text x="261.5" y="409.0" text-anchor="middle" font-size="16" fill="#0F6E52">시스템 상태 및 장애 코드 발행 (10 Hz)</text>
+<rect x="460" y="335" width="305" height="100" rx="12" fill="#E1F5EE" stroke="#2E8B6A" stroke-width="1.2"/><text x="612.5" y="379.0" text-anchor="middle" font-size="21" font-weight="600" fill="#0F5E45">safety_gate</text><text x="612.5" y="409.0" text-anchor="middle" font-size="16" fill="#0F6E52">주행 명령 제어 (PASS / SLOW / STOP)</text>
+<rect x="109" y="535" width="305" height="100" rx="12" fill="#EEEDFE" stroke="#8B7FD6" stroke-width="1.2" stroke-dasharray="6 5"/><text x="261.5" y="579.0" text-anchor="middle" font-size="21" font-weight="600" fill="#3C3489">status_reporter</text><text x="261.5" y="609.0" text-anchor="middle" font-size="16" fill="#534AB7">MQTT 기반 원격 상태 전송</text>
+<rect x="460" y="535" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="612.5" y="579.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">odom_publisher</text><text x="612.5" y="609.0" text-anchor="middle" font-size="16" fill="#5F5E5A">safety_gate 출력 토픽 구독 (remapping)</text>
+<rect x="811" y="535" width="305" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="963.5" y="579.0" text-anchor="middle" font-size="20" font-weight="600" fill="#2C2C2A">ros_robot_controller</text><text x="963.5" y="609.0" text-anchor="middle" font-size="16" fill="#5F5E5A">모터 제어 보드 통신 노드</text>
 <polyline points="261.5,267 261.5,333" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="612.5,267 612.5,333" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="963.5,163 963.5,140 437,140 437,359 416,359" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="416,397 458,397" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="261.5,437 261.5,533" fill="none" stroke="#8A8A8A" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
 <polyline points="612.5,437 612.5,533" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
-<text x="626.5" y="462" text-anchor="start" font-size="15" fill="#555">0 속도 / 감속 명령</text>
+<text x="626.5" y="462" text-anchor="start" font-size="15" fill="#555">안전 제어가 적용된 주행 명령</text>
 <polyline points="767,585 809,585" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="963.5,533 963.5,495 370,495 370,437" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
 <polyline points="540,533 540,495" fill="none" stroke="#8A8A8A" stroke-width="2"/>
@@ -26,20 +26,20 @@
 <text x="532" y="522" text-anchor="end" font-size="15" fill="#555">odom_raw</text>
 <line x1="612.5" y1="488" x2="612.5" y2="502" stroke="#FFFFFF" stroke-width="10"/>
 <polyline points="612.5,437 612.5,533" fill="none" stroke="#8A8A8A" stroke-width="2" marker-end="url(#a)"/>
-<rect x="109" y="830" width="656" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="437.0" y="874.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">내 노트북 (Wi-Fi)</text><text x="437.0" y="904.0" text-anchor="middle" font-size="16" fill="#5F5E5A">ros2 CLI · rviz2 · SSH · MQTT 브로커(예정)</text>
-<rect x="811" y="830" width="342" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="982.0" y="874.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">RRC Lite</text><text x="982.0" y="904.0" text-anchor="middle" font-size="16" fill="#993C1D">모터 · 조향 · IMU · 배터리</text>
+<rect x="109" y="830" width="656" height="100" rx="12" fill="#F1EFE8" stroke="#8A8880" stroke-width="1.2"/><text x="437.0" y="874.0" text-anchor="middle" font-size="21" font-weight="600" fill="#2C2C2A">개발 PC (Wi-Fi)</text><text x="437.0" y="904.0" text-anchor="middle" font-size="16" fill="#5F5E5A">ros2 CLI, rviz2, SSH, MQTT 브로커 (구현 예정)</text>
+<rect x="811" y="830" width="342" height="100" rx="12" fill="#FAECE7" stroke="#C0563A" stroke-width="1.2"/><text x="982.0" y="874.0" text-anchor="middle" font-size="21" font-weight="600" fill="#7A2810">모터 제어 보드 (RRC Lite)</text><text x="982.0" y="904.0" text-anchor="middle" font-size="16" fill="#993C1D">모터·조향 제어 및 센서 데이터 수집</text>
 <polyline points="261.5,637 261.5,828" fill="none" stroke="#8A8A8A" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-<text x="277.5" y="784" text-anchor="start" font-size="16" fill="#555">MQTT (예정)</text>
+<text x="277.5" y="784" text-anchor="start" font-size="16" fill="#555">MQTT (구현 예정)</text>
 <polyline points="612,690 612,828" fill="none" stroke="#8A8A8A" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
-<text x="630" y="784" text-anchor="start" font-size="16" fill="#555">ROS 2 DDS · UDP</text>
+<text x="630" y="784" text-anchor="start" font-size="16" fill="#555">ROS 2 DDS (UDP)</text>
 <polyline points="963.5,637 963.5,828" fill="none" stroke="#8A8A8A" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
-<text x="979.5" y="784" text-anchor="start" font-size="16" fill="#555">USB 시리얼</text>
+<text x="979.5" y="784" text-anchor="start" font-size="16" fill="#555">USB Serial</text>
 <rect x="72" y="962" width="20" height="20" rx="4" fill="#E1F5EE" stroke="#2E8B6A"/>
-<text x="106" y="978" text-anchor="start" font-size="17" fill="#444">이 프로젝트 (구현)</text>
-<rect x="342" y="962" width="20" height="20" rx="4" fill="#EEEDFE" stroke="#8B7FD6" stroke-dasharray="3 2"/>
-<text x="376" y="978" text-anchor="start" font-size="17" fill="#444">예정</text>
-<rect x="612" y="962" width="20" height="20" rx="4" fill="#F1EFE8" stroke="#8A8880"/>
-<text x="646" y="978" text-anchor="start" font-size="17" fill="#444">Hiwonder · 호스트 · 노트북</text>
-<rect x="882" y="962" width="20" height="20" rx="4" fill="#FAECE7" stroke="#C0563A"/>
-<text x="916" y="978" text-anchor="start" font-size="17" fill="#444">MCU 보드</text>
+<text x="106" y="978" text-anchor="start" font-size="17" fill="#444">자체 구현 노드</text>
+<rect x="290" y="962" width="20" height="20" rx="4" fill="#EEEDFE" stroke="#8B7FD6" stroke-dasharray="3 2"/>
+<text x="324" y="978" text-anchor="start" font-size="17" fill="#444">구현 예정 노드</text>
+<rect x="500" y="962" width="20" height="20" rx="4" fill="#F1EFE8" stroke="#8A8880"/>
+<text x="534" y="978" text-anchor="start" font-size="17" fill="#444">기존 소프트웨어 및 실행 환경</text>
+<rect x="830" y="962" width="20" height="20" rx="4" fill="#FAECE7" stroke="#C0563A"/>
+<text x="864" y="978" text-anchor="start" font-size="17" fill="#444">모터 제어 보드</text>
 </svg>
