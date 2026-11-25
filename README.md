@@ -91,11 +91,11 @@ safety_gate 비정상 종료 → 바퀴 회전 지속 → 수동 정지 (단일 
 
 ### 하드웨어
 
-![하드웨어 구성](docs/media/architecture_hardware.svg)
+![하드웨어 구성](docs/media/architecture_hardware_v2.svg)
 
 ### 소프트웨어
 
-![소프트웨어 구성](docs/media/architecture_software.svg)
+![소프트웨어 구성](docs/media/architecture_software_v2.svg)
 
 - 초록색은 이 프로젝트에서 구현한 노드이고, 회색은 기존 소프트웨어와 실행 환경입니다. Hiwonder 코드는 수정하지 않았습니다.
 - `odom_publisher`의 명령 입력 두 개(`/cmd_vel`, `/controller/cmd_vel`)를 launch에서 `/safety_gate/*`로 remap해, `odom_publisher`로 들어가는 모든 주행 명령이 safety_gate를 거치도록 구성했습니다.
